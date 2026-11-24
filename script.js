@@ -21,6 +21,17 @@ const expenses = ["food", "rent", "others", "saving"];
 const inputIds = ["salary", ...expenses];
 const outputIds = ["result", "conversionResult"];
 
+const errorMsg = document.getElementById('error-msg');
+
+inputIds.forEach(id => document.getElementById(id).addEventListener("beforeinput",(event) => {
+  if (event.data && !/^[0-9]+$/.test(event.data)){
+    event.preventDefault();
+    errorMsg.style.display = 'inline'
+  }else{
+    errorMsg.style.display = 'none'
+  }
+}))
+
 let balance = null;
 
 function getAmount (id) {

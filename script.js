@@ -2,31 +2,72 @@
 
 import User from './user.js'
 
-const person = new User("Muhamad Abu Bakar", "Bin Rashid");
+import {
+  setupPrivacyToggle,
+  updatePrivateText,
+  getPrivateInputValue
+} from "./privacy.js";
 
-const greeting = document.getElementById("greeting");
-greeting.textContent = `Welcome, ${person.fullname}!`;
+import { setupCurrencyExchange, formatMoney } from "./CurrencyExchange.js";
+
+const person = new User("Muhamad Abu Bakar", "Bin Rashid");
+document.getElementById("greeting").textContent = `Welcome, ${person.fullname}!`;
+
+const fromCurrency = document.getElementById("fromCurrency");
+const result = document.getElementById("result");
+const conversionResult = document.getElementById("conversionResult");
 
 const expenses = ["food", "rent", "others", "saving"];
+const inputIds = ["salary", ...expenses];
+const outputIds = ["result", "conversionResult"];
 
-const calcBtn = document.getElementById("calcBtn")
-calcBtn.addEventListener("click",calculate)
+let balance = null;
+
+function getAmount (id) {
+  return Number(getPrivateInputValue(id)) || 0;
+}
 
 function calculate() {
-  const salary = Number(document.getElementById("salary").value) || 0;
+  const salary = getAmount("salary");
 
-  let total = 0;
+  let totalExpenses = 0
   for (let i = 0; i < expenses.length; i++) {
-    const val = Number(document.getElementById(expenses[i]).value) || 0;
-    total += val;
+    const value = getAmount(expenses[i]);
+    totalExpenses += value;
   }
 
-  const balance = salary - total;
-  const percent = (balance / salary) * 100;
+  balance = salary - totalExpenses;
 
-  const result = document.getElementById("result");
-  result.textContent = `Net Balance: $${balance} (${percent.toFixed(1)}% of income)`;
+  let percent = "N/A";
+  if (salary !== 0) {
+    percent = ((balance / salary) * 100).toFixed(2) + "%";
+  }
 
-  result.style.backgroundColor = balance >= 0 ? "#d4edda" : "#f8d7da";
-  result.style.color = balance >= 0 ? "#155724" : "#721c24";
+  updatePrivateText(
+    result, 
+    `Net Balance: ${fromCurrency.value} ${formatMoney(balance)} (${percent} of income)`);
+
+  result.className = balance >= 0
+    ? "text-success fw-bold"
+    : "text-danger fw-bold";
 }
+
+function resetResults() {
+  balance = null;
+  updatePrivateText(result, "");
+  updatePrivateText(conversionResult, "");
+}
+
+document.getElementById("calcBtn").addEventListener("click", calculate);
+inputIds.forEach(id => document.getElementById(id).addEventListener("input", resetResults));
+fromCurrency.addEventListener("change", resetResults);
+
+setupPrivacyToggle(inputIds, outputIds);
+
+setupCurrencyExchange(() => ({
+  balance,
+  currency: fromCurrency.value
+}));
+  
+
+

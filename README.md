@@ -50,3 +50,6 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.title = label;
   });
 ```
+
+**Copy right (c) 2026**
+This is solely for education purpose only. All rights to the original content, images, or any proprietary rights belong to their respective copyright owners. 

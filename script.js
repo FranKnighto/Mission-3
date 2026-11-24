@@ -71,7 +71,7 @@ function resetResults() {
 
 document.getElementById("calcBtn").addEventListener("click", calculate);
 inputIds.forEach(id => document.getElementById(id).addEventListener("input", resetResults));
-fromCurrency.addEventListener("change", resetResults);
+document.getElementById("fromCurrency").addEventListener("change", resetResults);
 
 setupPrivacyToggle(inputIds, outputIds);
 

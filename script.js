@@ -24,7 +24,7 @@ const outputIds = ["result", "conversionResult"];
 const errorMsg = document.getElementById('error-msg');
 
 inputIds.forEach(id => document.getElementById(id).addEventListener("beforeinput",(event) => {
-  if (event.data && !/^[0-9]+$/.test(event.data)){
+  if (event.data && !/^[0-9.]+$/.test(event.data)){
     event.preventDefault();
     errorMsg.style.display = 'inline'
   }else{

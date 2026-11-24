@@ -18,7 +18,7 @@ Ledger Balance System is a simple budgeting tool for allocating the salary of th
 2. This tool is enchanced with a hide/unhide button using bi-eye locating at the top right of the webpage.
 3. When the bi-eye is open, it stated that the numbers are revealed.
 4. Click on the bi-eye, it will turned into bi-eye-slashed. All the numbers and results will be masked by ***
-5. Click again on the bi-eye-slashed, all the numbesr and results will now revealed again!
+5. Click again on the bi-eye-slashed, all the numbers and results will now revealed again!
 
 Below are the magic of this feature:-
 
